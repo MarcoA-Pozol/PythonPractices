@@ -1,0 +1,18 @@
+This is a practice system where the abstract structure and business logic is included, to build a system that 
+allow users to do different actions when they are online and others when they are not, they can even pay for 
+a premium account to simulate when they have access to premium features of the application, the application 
+is about a programming courses application where they have access to premium and free couses once they have a
+created account.
+
+This should contain:
+- [DONE] Proxy Dessign Pattern to manage the user authentication.
+- [DONE] Authentication system.
+- Free and Premium features.
+- Payment System.
+- Invoices via email sending system.
+- Videos reproduction.
+- Connection to the database.
+- Free and Premium content for courses.
+
+This all is just in abstract functionality, the real one is only possible using frameworks and libraries, then
+this should be done just in abstract terms, what the principles of abstraction, SOLID and dessign patterns say.

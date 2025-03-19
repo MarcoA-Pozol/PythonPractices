@@ -1,0 +1,7 @@
+Required Libraries:
+ - requests: To make the API call and fetch the data.
+ - prettytable: To generate the table in a terminal-friendly format.
+ - reportlab: To create and customize PDFs.
+ - Pandas(optional): To handle data in a tabular format (if needed).
+ 
+ 
