@@ -2,14 +2,14 @@ import socket
 import threading
 
 # Creating the client socket
-client = socket.socket(socket.AF_NET, socket.SOCK_STREAM)
-client.connect('localhost', 8600)
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(('localhost', 8600))
 
 def receive_message():
     """
         Continuously receive messages from the server(server is deliverying messages steming from another user/client socket)
     """
-    while true:
+    while True:
         try:
             msg = client.recv(1024).decode('utf-8')
             print(msg)
@@ -20,10 +20,13 @@ def receive_message():
 # Obtaining username to identify the message sender
 username = input('Enter your username:')
 
+# Continuously receive messages from the server in a separe thread
+threading.Thread(target=receive_message, daemon=True).start()
+
 # Send message
-while true:
-    msg = input(f'You: '.encode('utf-8'))
-    client.send(f'{username}: {msg}')
+while True:
+    msg = input(f'You:')
+    client.send(f'{username}: {msg}'.encode('utf-8'))
     
     # If message is empty, close the server
     if not msg:
