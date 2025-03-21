@@ -34,7 +34,7 @@ def handle_client(client, addr):
     client.close()
     
 # Accept only two clients
-while len(clients) < 2:
+while len(clients) < 3:
     client, addr = server.accept() # Server will accept another client to connect while there are less than 2 clients in clients list
     clients.append(client)
     threading.Thread(target=handle_client, args=(client, addr)).start()
