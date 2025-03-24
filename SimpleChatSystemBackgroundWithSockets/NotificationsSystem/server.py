@@ -48,7 +48,17 @@ def handle_client(client, addr):
     clients.remove(client)
     client.close()
 
-while len(clients) < 6:
-    client, addr = server.accept()
-    clients.append(client)
-    threading.Thread(target=handle_client, args=(client, addr)).start()
+async def check_for_server_connections_availability(clients:list=clients) -> None:
+    """
+        Checks up server is available to receive more client connections, if not, then it just pass up without receiving the client that requested to connect.
+
+        Attributes:
+        - clients(list): The list of clients connected to the server(it only accept 6 connections, the first one is for the client that manages the notifications and send them to other destination clients).
+
+        Returns:
+        - None
+    """
+    while len(clients) < 6:
+        client, addr = server.accept()
+        clients.append(client)
+        threading.Thread(target=handle_client, args=(client, addr)).start()
