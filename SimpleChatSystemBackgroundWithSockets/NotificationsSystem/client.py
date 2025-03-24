@@ -34,16 +34,24 @@ USERS_DICT = {
 # Thread to execute the function that receives messages from the server and sends these to the client in a continuously manner.
 threading.Thread(target=receive_message, daemon=True).start()
 
-# Send messages from client to server.
-user = 'SELECT AN USER FROM THE DICT OF USERS'
-while True:
-    # Send the message.
-    message = input(f'Message:')
-    client.send(f'{user}: {message}'.encode('utf-8'))
+def send_message(user:object) -> None:
+    """
+        Send messages from client to server to a destination user.
+        
+        Attributes:
+        - user(object): The destination user who will receive the sent message.
 
-    # Close the server.
-    if message == '\q':
-        break
+        Returns:
+        - None
+    """
+    while True:
+        # Send the message.
+        message = input(f'Message:')
+        client.send(f'{user}: {message}'.encode('utf-8'))
 
-# Close client connection.
-client.close()
+        # Close the server.
+        if message == '\q':
+            break
+
+    # Close client connection.
+    client.close()
