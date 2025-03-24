@@ -1,27 +1,36 @@
 import socket
+import threading
 
+# Creating the client socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('localhost', 8600))
 
-done = False
+def receive_message():
+    """
+        Continuously receive messages from the server(server is deliverying messages steming from another user/client socket)
+    """
+    while True:
+        try:
+            msg = client.recv(1024).decode('utf-8')
+            print(msg)
+        except ConnectionResetError:
+            print('Disconnected from server.')
+            break
+            
+# Obtaining username to identify the message sender
+username = input('Enter your username:')
 
-while not done:
-    # Client waits for server's message first
-    msg = client.recv(1024).decode('utf-8')
-    print(f"Server: {msg}")
+# Continuously receive messages from the server in a separe thread
+threading.Thread(target=receive_message, daemon=True).start()
 
-    # If server wants to quit
-    if msg.lower() == "quit":
-        done = True
+# Send message
+while True:
+    msg = input(f'You:')
+    client.send(f'{username}: {msg}'.encode('utf-8'))
+    
+    # If message is empty, close the server
+    if not msg:
         break
 
-    # Client sends response
-    msg = input("Client: ")  
-    client.send(msg.encode('utf-8'))
-
-    # If client wants to quit
-    if msg.lower() == "quit":
-        done = True
-        break
-
+# Closing socket connection once the user decided to quit
 client.close()
