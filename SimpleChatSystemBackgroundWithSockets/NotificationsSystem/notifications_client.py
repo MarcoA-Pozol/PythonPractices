@@ -53,4 +53,8 @@ def send_notification_messages(notifications_list:list=notification_messages) ->
         notifications_client.close()
         logging.info("Notifications client connection closed.")
 
-threading.Thread(target=send_notification_messages, daemon=True).start()
+# Send notifications using a thread once it´s started.
+try:
+    threading.Thread(target=send_notification_messages, daemon=True).start()
+except Exception as e:
+    logging.error(f"An error occurred while starting the thread(send_notification_messages): {e}")
